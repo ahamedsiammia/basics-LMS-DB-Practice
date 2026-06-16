@@ -1,0 +1,229 @@
+// CREATION AND INSERTION -> QUERY FILE 
+
+-- DATABASE CREATE
+CREATE DATABASE LIBRARY_MANAGEMENT_SYSTEM
+
+-- DROP DATABASE 
+DROP DATABASE DATABASE_NAME
+
+-- CREATE TABLES 
+  
+CREATE TABLE book(
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(150) NOT NULL,
+  author VARCHAR(150) NOT NULL,
+  isbn BIGINT UNIQUE ,
+  category VARCHAR(50) NOT NULL,
+  reating SMALLINT CHECK(reating <=5),
+  price NUMERIC(8,2) CHECK(price > 0) ,
+  isAvailable BOOLEAN DEFAULT TRUE ,
+  tags TEXT[],
+  matadata JSONB
+)
+
+-- DELETE TABLE 
+  
+  DROP TABLE book
+
+-- INSERT SINGL RECORD 
+
+INSERT INTO book(id,title,author,isbn,category,reating,price,tags,matadata)  VALUES(1,'TITLE-1','AUTHOR-1','1234567','CATEGORY-1',3,100,ARRAY['MATH','PROGRAMMING','PHYSIC'],'{"page" :"2000","bio":"TOMI DEKAIYAO DEKLE NAH"}')
+
+-- INSERT MULTIPUL RECORD 
+  INSERT INTO book (id,title,author,isbn,category,reating,price,tags,matadata) 
+  VALUES (2,'TITLE-1','AUTHOR-1','12634569','CATEGORY-1',3,100,ARRAY['MATH','PROGRAMMING','PHYSIC'],'{"page":"2000","bio":"TOMI DEKAIYAO DEKLE NAH"}'),
+
+(3,'TITLE-2','AUTHOR-2','23415678','CATEGORY-2',5,150,ARRAY['DATABASE','SQL','POSTGRESQL'],'{"page":"1500","bio":"EXPERT IN DATABASE DESIGN AND MANAGEMENT"}'),
+
+(4,'TITLE-3','AUTHOR-3','34567819','CATEGORY-3',4,200,ARRAY['JAVA','SPRING','BACKEND'],'{"page":"1800","bio":"SOFTWARE ENGINEER WITH 10 YEARS EXPERIENCE"}'),
+
+(5,'TITLE-4','AUTHOR-4','45617890','CATEGORY-4',2,75,ARRAY['PYTHON','DJANGO','WEB'],'{"page":"1200","bio":"WEB DEVELOPER AND TECHNICAL WRITER"}'),
+
+(6,'TITLE-5','AUTHOR-5','56789101','CATEGORY-5',5,300,ARRAY['AI','MACHINE LEARNING','DATA SCIENCE'],'{"page":"2500","bio":"RESEARCHER IN ARTIFICIAL INTELLIGENCE"}');
+
+-- VIEW ALL RECORD 
+SELECT * FROM book
+
+
+-- DROP TABLE 
+
+DROP TABLE books
+
+
+<!-- LMS-> ALTER QUERY -->
+
+-- RENAME TABLE 
+
+ALTER TABLE book RENAME TO books
+
+-- ADD COLUMN 
+  
+ALTER TABLE books ADD COLUMN publishedDate DATE;
+
+-- DROP COLUMN 
+
+ALTER TABLE books DROP COLUMN reating;
+
+-- RENAME COLUMN 
+
+ALTER TABLE books RENAME COLUMN category TO categories
+
+-- CHANGE DATA TYPE 
+
+ -- ALTER TABLE books ALTER COLUMN price TYPE INT USING price :: INT
+
+ALTER TABLE books ALTER COLUMN price TYPE INT
+
+-- SET DEFAULT VALUE
+
+ALTER TABLE books ALTER COLUMN publishedDate SET DEFAULT CURRENT_DATE
+
+-- DROP DEFAULT VALUE 
+
+ALTER TABLE books ALTER COLUMN publishedDate DROP DEFAULT
+
+-- SET NOT NULL CONSTRAINT 
+
+ALTER TABLE books ALTER COLUMN categories SET NOT NULL;
+
+-- DROP NOT NULL CONSTRAINT 
+
+ALTER TABLE books ALTER COLUMN categories DROP NOT NULL
+
+-- SET UNIQUE CONSTRAINT 
+
+ALTER TABLE books ADD  CONSTRAINT  unique_books_title UNIQUE(title);
+
+-- DROP CONSTRAINT 
+
+ALTER TABLE books DROP CONSTRAINT unique_books_title;
+
+
+-- ADD PRIMARY KEY 
+ALTER TABLE books ADD CONSTRAINT primary_key PRIMARY KEY(ID);
+
+-- DROP PRIMARY KEY 
+ALTER TABLE books DROP CONSTRAINT primary_key;
+
+
+
+<!-- LMS-> SELECT QUERY -->
+
+-- CREATE TABLE 
+CREATE TABLE books (
+  id SERIAL PRIMARY KEY ,
+  title VARCHAR(100) NOT NULL,
+  isbn BIGINT UNIQUE,
+  category VARCHAR(50),
+  price NUMERIC(8,2),
+  pages INT,
+  rating DECIMAL(2,1),
+  stock SMALLINT,
+  is_available BOOLEAN,
+  published_date DATE,
+  tags TEXT[],
+  metadata JSONB
+)
+
+-- INSERT INTO MULTIPUL DATA 
+
+INSERT INTO books
+(title, isbn, category, price, pages, rating, stock, is_available, published_date, tags, metadata)
+VALUES
+('Learning PostgreSQL', 9781000000001, 'Database', 450.00, 450, 4.8, 25, true, '2022-01-15',
+ ARRAY['SQL','POSTGRESQL','DATABASE'],
+ '{"author":"John Smith","publisher":"TechPress","language":"English"}'),
+
+('Python Fundamentals', 9781000000002, 'Programming', 520.00, 320, 4.5, 40, true, '2021-03-10',
+ ARRAY['PYTHON','BEGINNER','CODING'],
+ '{"author":"Alice Brown","publisher":"CodeBooks","language":"English"}'),
+
+('Advanced Java', 9781000000003, 'Programming', 680.00, 600, 4.7, 18, true, '2020-07-20',
+ ARRAY['JAVA','OOP','BACKEND'],
+ '{"author":"Michael Lee","publisher":"DevHouse","language":"English"}'),
+
+('Data Structures', 9781000000004, 'Computer Science', 750.00, 500, 4.6, 22, true, '2019-09-05',
+ ARRAY['ALGORITHMS','DSA','CS'],
+ '{"author":"Robert King","publisher":"UniBooks","language":"English"}'),
+
+('Machine Learning Basics', 9781000000005, 'AI', 890.00, 550, 4.9, 15, true, '2023-02-11',
+ ARRAY['AI','ML','DATA'],
+ '{"author":"Sarah Wilson","publisher":"AI Press","language":"English"}'),
+
+('Deep Learning Guide', 9781000000006, 'AI', 999.99, 700, 4.8, 12, true, '2023-08-18',
+ ARRAY['AI','NEURAL NETWORKS','DL'],
+ '{"author":"Tom Harris","publisher":"FutureTech","language":"English"}'),
+
+('Web Development with Django', 9781000000007, 'Programming', 620.00, 480, 4.4, 30, true, '2022-05-21',
+ ARRAY['PYTHON','DJANGO','WEB'],
+ '{"author":"Emma Scott","publisher":"WebBooks","language":"English"}'),
+
+('JavaScript Mastery', 9781000000008, 'Programming', 480.00, 390, 4.3, 35, true, '2021-11-14',
+ ARRAY['JAVASCRIPT','FRONTEND','WEB'],
+ '{"author":"David Clark","publisher":"CodeBooks","language":"English"}'),
+
+('React in Action', 9781000000009, 'Programming', 570.00, 410, 4.5, 20, true, '2022-09-01',
+ ARRAY['REACT','JAVASCRIPT','UI'],
+ '{"author":"Chris Evans","publisher":"FrontendPub","language":"English"}'),
+
+('Linux Administration', 9781000000010, 'System', 820.00, 530, 4.7, 14, true, '2020-12-12',
+ ARRAY['LINUX','DEVOPS','SERVER'],
+ '{"author":"Mark Green","publisher":"SysPress","language":"English"}');
+
+-- SELECT ALL RECORDS 
+
+SELECT * FROM books
+
+-- DROP TABLE 
+
+  DROP TABLE books
+
+
+-- USING COLUMN ALIAS 
+
+SELECT title as "OUR BOOKS" FROM books
+
+-- USING ALIAS  MULTIPLE COLUMN 
+
+SELECT title as "TITLE OF BOOKS" , price as "PRICE OF BOOKS" FROM books;
+
+  -- SORT BOOKS BY PRICE (DESCENDING)
+
+SELECT title as "TITLE OF BOOKS" , price as "PRICE OF BOOKS" FROM books ORDER BY price  DESC
+
+-- SELECT UNIQUE CATEGORY (DISTINCT) 
+
+SELECT DISTINCT category FROM books;
+
+-- FILTER BOOKS USING BY WHERE 
+
+-- FILTER USING EQUAL (=) OPERATOR ;
+
+SELECT * FROM books WHERE category = 'Programming'
+
+-- SELECT AVAILABLE BOOKS 
+
+SELECT * FROM books WHERE is_available = true;
+
+-- FILTER USING OR OPERATOR 
+
+-- SELECT * FROM books WHERE category = 'Programming' OR category = 'AI' ; 
+
+SELECT * FROM books WHERE category IN('Programming','AI')
+
+-- FILTER USIGN AND OR AND COMPARISON OPERATOR 
+
+SELECT * FROM books WHERE category IN('Programming','AI','Computer Science') AND (price > 500)
+
+
+-- FILTER USING BETWEEN 
+
+SELECT * FROM books WHERE pages BETWEEN 300 AND 500;
+
+-- FILTER FROM ARRAY 
+
+SELECT * FROM books WHERE 'PYTHON' = ANY(tags);
+
+-- FILTER FROM JSONB
+
+SELECT * FROM books WHERE metadata->>'publisher' = 'CodeBooks'
